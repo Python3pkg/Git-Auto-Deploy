@@ -82,12 +82,12 @@ def rename_legacy_attribute_names(config):
         'logfilepath': 'log-file'
     }
 
-    for item in rewrite_map.items():
+    for item in list(rewrite_map.items()):
         old_name, new_name = item
         if old_name in config:
             config[new_name] = config[old_name]
             del config[old_name]
-            print("Config option '%s' is deprecated. Please use '%s' instead." % (old_name, new_name))
+            print(("Config option '%s' is deprecated. Please use '%s' instead." % (old_name, new_name)))
 
     return config
 

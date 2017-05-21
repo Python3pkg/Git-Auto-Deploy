@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+
 from .events import WebhookAction
 from .parsers import get_service_handler
 
@@ -6,7 +6,7 @@ from .parsers import get_service_handler
 def WebhookRequestHandlerFactory(config, event_store, server_status, is_https=False):
     """Factory method for webhook request handler class"""
     try:
-        from SimpleHTTPServer import SimpleHTTPRequestHandler
+        from http.server import SimpleHTTPRequestHandler
     except ImportError as e:
         from http.server import SimpleHTTPRequestHandler
 
@@ -102,7 +102,7 @@ def WebhookRequestHandlerFactory(config, event_store, server_status, is_https=Fa
 
             # Extract request headers and make all keys to lowercase (makes them easier to compare)
             request_headers = dict(self.headers)
-            request_headers = dict((k.lower(), v) for k, v in request_headers.items())
+            request_headers = dict((k.lower(), v) for k, v in list(request_headers.items()))
 
             action = WebhookAction(self.client_address, request_headers, request_body)
             self._event_store.register_action(action)
@@ -253,7 +253,7 @@ def WebhookRequestHandlerFactory(config, event_store, server_status, is_https=Fa
             """Generate a copy of the server status object that contains the public IP or hostname."""
 
             server_status = {}
-            for item in self._server_status.items():
+            for item in list(self._server_status.items()):
                 key, value = item
                 public_host = self.headers.get('host').split(':')[0]
 

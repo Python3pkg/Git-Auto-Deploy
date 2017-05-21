@@ -294,7 +294,7 @@ class GitAutoDeploy(object):
         from .events import SystemEvent
 
         try:
-            from BaseHTTPServer import HTTPServer
+            from http.server import HTTPServer
         except ImportError as e:
             from http.server import HTTPServer
 
@@ -358,7 +358,7 @@ class GitAutoDeploy(object):
         from .events import SystemEvent
 
         try:
-            from BaseHTTPServer import HTTPServer
+            from http.server import HTTPServer
         except ImportError as e:
             from http.server import HTTPServer
 
@@ -446,7 +446,7 @@ class GitAutoDeploy(object):
             # Create a WebSocketClientHandler instance
             WebSocketClientHandler = WebSocketClientHandlerFactory(self._config, self._ws_clients, self._event_store, self._server_status)
 
-            uri = u"ws://%s:%s" % (self._config['wss-host'], self._config['wss-port'])
+            uri = "ws://%s:%s" % (self._config['wss-host'], self._config['wss-port'])
             factory = WebSocketServerFactory(uri)
             factory.protocol = WebSocketClientHandler
             # factory.setProtocolOptions(maxConnections=2)
@@ -603,12 +603,12 @@ class GitAutoDeploy(object):
 
 def main():
     import signal
-    from gitautodeploy import GitAutoDeploy
-    from cli.config import get_config_defaults, get_config_from_environment
-    from cli.config import get_config_from_argv, find_config_file
-    from cli.config import get_config_from_file, get_repo_config_from_environment
-    from cli.config import init_config, get_config_file_path, rename_legacy_attribute_names
-    from cli.config import ConfigFileNotFoundException, ConfigFileInvalidException
+    from .gitautodeploy import GitAutoDeploy
+    from .cli.config import get_config_defaults, get_config_from_environment
+    from .cli.config import get_config_from_argv, find_config_file
+    from .cli.config import get_config_from_file, get_repo_config_from_environment
+    from .cli.config import init_config, get_config_file_path, rename_legacy_attribute_names
+    from .cli.config import ConfigFileNotFoundException, ConfigFileInvalidException
     import logging
     import sys
     import os

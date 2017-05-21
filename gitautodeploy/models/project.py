@@ -41,7 +41,7 @@ class Project(collections.MutableMapping):
         for filter in self['payload-filter']:
 
             # All options specified in the filter must match
-            for filter_key, filter_value in filter.items():
+            for filter_key, filter_value in list(filter.items()):
 
                 # Ignore filters with value None (let them pass)
                 if filter_value == None:
